@@ -5,12 +5,20 @@ import '../screens/recycle_bin_screen.dart';
 import '../screens/tabs_screen.dart';
 import '../test_data.dart';
 
-class TasksDrawer extends StatelessWidget {
+class TasksDrawer extends StatefulWidget {
   const TasksDrawer({Key? key}) : super(key: key);
 
+  @override
+  State<TasksDrawer> createState() => _TasksDrawerState();
+}
+
+class _TasksDrawerState extends State<TasksDrawer> {
   _switchToDarkTheme(BuildContext context, bool isDarkTheme) {
     if (isDarkTheme) {
-    } else {}
+      return context.read<SwitchBloc>().add(SwitchOnEvent());
+    } else {
+      return context.read<SwitchBloc>().add(SwitchOffEvent());
+    }
   }
 
   @override
@@ -58,13 +66,23 @@ class TasksDrawer extends StatelessWidget {
             ),
             const Divider(),
             const Expanded(child: SizedBox()),
-            ListTile(
-              leading: Switch(
-                value: TestData.isDarkTheme,
-                onChanged: (newValue) => _switchToDarkTheme(context, newValue),
-              ),
-              title: const Text('Switch to Dark Theme'),
-              onTap: () => _switchToDarkTheme(context, !TestData.isDarkTheme),
+            BlocBuilder<SwitchBloc, SwitchState>(
+              builder: (context, state) {
+                return ListTile(
+                  leading: BlocBuilder<SwitchBloc, SwitchState>(
+                    builder: (context, state) {
+                      return Switch(
+                        value: state.switchValue,
+                        onChanged: (newValue) =>
+                            _switchToDarkTheme(context, newValue),
+                      );
+                    },
+                  ),
+                  title: state.switchValue
+                      ? const Text('Switch to Light Mode')
+                      : const Text('Switch to Dark Mode'),
+                );
+              },
             ),
             const SizedBox(height: 10),
           ],
