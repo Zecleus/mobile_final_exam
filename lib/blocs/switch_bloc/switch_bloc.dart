@@ -9,6 +9,7 @@ class SwitchBloc extends Bloc<SwitchEvent, SwitchState> {
     on<SwitchOnEvent>((event, emit) {
       emit(const SwitchState(switchValue: true));
     });
+
     on<SwitchOffEvent>((event, emit) {
       emit(const SwitchState(switchValue: false));
     });
