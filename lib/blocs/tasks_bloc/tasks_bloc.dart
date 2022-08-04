@@ -11,7 +11,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     on<AddTask>((event, emit) {
       final state = this.state;
       emit(TasksState(
-        allTasks: List.from(state.allTasks)..add(event.task),
+        pendingTasks: List.from(state.pendingTasks)..add(event.task),
         removedTasks: state.removedTasks,
       ));
     });
@@ -19,15 +19,15 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     on<UpdateTask>((event, emit) {
       final state = this.state;
       final task = event.task;
-      final int index = state.allTasks.indexOf(task);
+      final int index = state.pendingTasks.indexOf(task);
 
-      List<Task> allTasks = List.from(state.allTasks)..remove(task);
+      List<Task> allTasks = List.from(state.pendingTasks)..remove(task);
       task.isDone == false
           ? allTasks.insert(index, task.copyWith(isDone: true))
           : allTasks.insert(index, task.copyWith(isDone: false));
 
       emit(
-        TasksState(allTasks: allTasks, removedTasks: state.removedTasks),
+        TasksState(pendingTasks: allTasks, removedTasks: state.removedTasks),
       );
     });
 
@@ -35,19 +35,19 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       final state = this.state;
 
       emit(TasksState(
-          allTasks: state.allTasks,
-          removedTasks: List.from(state.allTasks)..remove(event.task)));
+          pendingTasks: state.pendingTasks,
+          removedTasks: List.from(state.pendingTasks)..remove(event.task)));
     });
 
     on<RemoveTask>((event, emit) {
       final state = this.state;
       final task = event.task;
 
-      List<Task> allTasks = List.from(state.allTasks)..remove(task);
+      List<Task> allTasks = List.from(state.pendingTasks)..remove(task);
       List<Task> removedTasks = List.from(state.removedTasks)
         ..add(event.task.copyWith(isDeleted: true));
 
-      emit(TasksState(allTasks: allTasks, removedTasks: removedTasks));
+      emit(TasksState(pendingTasks: allTasks, removedTasks: removedTasks));
     });
   }
   // void _onUpdateTask(UpdateTask event, Emitter<TasksState> emit) {}
