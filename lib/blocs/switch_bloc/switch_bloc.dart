@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:bloc_finals_exam/blocs/bloc_exports.dart';
 import 'package:equatable/equatable.dart';
 
