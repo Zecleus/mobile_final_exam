@@ -2,7 +2,7 @@ import 'package:bloc_finals_exam/models/task.dart';
 import 'package:flutter/material.dart';
 
 import '../blocs/bloc_exports.dart';
-import '../test_data.dart';
+
 import '../widgets/tasks_list.dart';
 
 class PendingTasksScreen extends StatelessWidget {
