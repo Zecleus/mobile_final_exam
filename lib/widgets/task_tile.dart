@@ -27,6 +27,12 @@ class TaskTile extends StatelessWidget {
     );
   }
 
+  void _removeOrDelete(BuildContext context, Task task) {
+    task.isDeleted!
+        ? context.read<TasksBloc>().add(DeleteTask(task: task))
+        : context.read<TasksBloc>().add(RemoveTask(task: task));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
