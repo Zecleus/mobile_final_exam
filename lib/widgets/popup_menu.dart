@@ -1,4 +1,3 @@
-import 'package:bloc_finals_exam/blocs/bloc/tasks_bloc.dart';
 import 'package:flutter/material.dart';
 
 import '../models/task.dart';

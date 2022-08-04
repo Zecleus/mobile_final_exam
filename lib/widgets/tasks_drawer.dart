@@ -5,12 +5,20 @@ import '../screens/recycle_bin_screen.dart';
 import '../screens/tabs_screen.dart';
 import '../test_data.dart';
 
-class TasksDrawer extends StatelessWidget {
+class TasksDrawer extends StatefulWidget {
   const TasksDrawer({Key? key}) : super(key: key);
 
+  @override
+  State<TasksDrawer> createState() => _TasksDrawerState();
+}
+
+class _TasksDrawerState extends State<TasksDrawer> {
   _switchToDarkTheme(BuildContext context, bool isDarkTheme) {
     if (isDarkTheme) {
-    } else {}
+      return false;
+    } else {
+      return true;
+    }
   }
 
   @override
@@ -60,7 +68,7 @@ class TasksDrawer extends StatelessWidget {
             const Expanded(child: SizedBox()),
             ListTile(
               leading: Switch(
-                value: TestData.isDarkTheme,
+                value: false,
                 onChanged: (newValue) => _switchToDarkTheme(context, newValue),
               ),
               title: const Text('Switch to Dark Theme'),
