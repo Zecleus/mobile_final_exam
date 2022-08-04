@@ -72,6 +72,50 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
           favoriteTasks: favoriteTasks,
           removedTasks: removedTasks));
     });
+
+    on<MarkFavoriteOrUnfavoriteTask>((event, emit) {
+      final state = this.state;
+      List<Task> pendingTasks = state.pendingTasks;
+      List<Task> completedTasks = state.completedTasks;
+      List<Task> favoriteTasks = state.favoriteTasks;
+
+      if (event.task.isDone == false) {
+        if (event.task.isFavorite == false) {
+          var taskIndex = pendingTasks.indexOf(event.task);
+          pendingTasks = List.from(pendingTasks)
+            ..remove(event.task)
+            ..insert(taskIndex, event.task.copyWith(isFavorite: true));
+          favoriteTasks.insert(0, event.task.copyWith(isFavorite: true));
+        } else {
+          var taskIndex = pendingTasks.indexOf(event.task);
+          pendingTasks = List.from(pendingTasks)
+            ..remove(event.task)
+            ..insert(taskIndex, event.task.copyWith(isFavorite: false));
+          favoriteTasks.remove(event.task);
+        }
+      } else {
+        if (event.task.isFavorite == false) {
+          var taskIndex = completedTasks.indexOf(event.task);
+          completedTasks = List.from(completedTasks)
+            ..remove(event.task)
+            ..insert(taskIndex, event.task.copyWith(isFavorite: true));
+          favoriteTasks.insert(0, event.task.copyWith(isFavorite: true));
+        } else {
+          var taskIndex = completedTasks.indexOf(event.task);
+          completedTasks = List.from(completedTasks)
+            ..remove(event.task)
+            ..insert(taskIndex, event.task.copyWith(isFavorite: false));
+          favoriteTasks.remove(event.task);
+        }
+      }
+
+      emit(TasksState(
+        pendingTasks: pendingTasks,
+        completedTasks: completedTasks,
+        favoriteTasks: favoriteTasks,
+        removedTasks: state.removedTasks,
+      ));
+    });
   }
 
   @override
