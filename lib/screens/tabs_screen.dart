@@ -44,52 +44,48 @@ class _TabsScreenState extends State<TabsScreen> {
   Widget build(BuildContext context) {
     final selectedPage = _pageDetails[_selectedPageIndex];
 
-    return BlocBuilder<TasksBloc, TasksState>(
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(selectedPage['title']),
-            actions: _selectedPageIndex == 0
-                ? [
-                    IconButton(
-                      onPressed: () => _addNewTask(context),
-                      icon: const Icon(Icons.add),
-                    ),
-                  ]
-                : null,
-          ),
-          drawer: const TasksDrawer(),
-          body: selectedPage['page'],
-          floatingActionButton: _selectedPageIndex == 0
-              ? FloatingActionButton(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(selectedPage['title']),
+        actions: _selectedPageIndex == 0
+            ? [
+                IconButton(
                   onPressed: () => _addNewTask(context),
-                  tooltip: 'Add Task',
-                  child: const Icon(Icons.add),
-                )
-              : null,
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _selectedPageIndex,
-            elevation: 24,
-            onTap: (index) {
-              setState(() => _selectedPageIndex = index);
-            },
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.incomplete_circle_sharp),
-                label: 'Pending Tasks',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.done),
-                label: 'Completed Tasks',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.favorite),
-                label: 'Favorite Tasks',
-              ),
-            ],
+                  icon: const Icon(Icons.add),
+                ),
+              ]
+            : null,
+      ),
+      drawer: const TasksDrawer(),
+      body: selectedPage['page'],
+      floatingActionButton: _selectedPageIndex == 0
+          ? FloatingActionButton(
+              onPressed: () => _addNewTask(context),
+              tooltip: 'Add Task',
+              child: const Icon(Icons.add),
+            )
+          : null,
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedPageIndex,
+        elevation: 24,
+        onTap: (index) {
+          setState(() => _selectedPageIndex = index);
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.incomplete_circle_sharp),
+            label: 'Pending Tasks',
           ),
-        );
-      },
+          BottomNavigationBarItem(
+            icon: Icon(Icons.done),
+            label: 'Completed Tasks',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favorite Tasks',
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:bloc_finals_exam/blocs/bloc/tasks_bloc.dart';
 import 'package:flutter/material.dart';
 
 import '../models/task.dart';
@@ -43,7 +44,9 @@ class PopupMenu extends StatelessWidget {
       PopupMenuItem(
         onTap: cancelOrDeleteCallback,
         child: TextButton.icon(
-          onPressed: null,
+          onPressed: () {
+            // context.read<TasksBloc>().add(DeleteTask(task: task));
+          },
           icon: const Icon(Icons.delete),
           label: const Text('Delete'),
         ),
