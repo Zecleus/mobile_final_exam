@@ -1,3 +1,5 @@
+import 'package:bloc_finals_exam/blocs/bloc/tasks_bloc.dart';
+import 'package:bloc_finals_exam/blocs/bloc_exports.dart';
 import 'package:flutter/material.dart';
 
 import '../models/task.dart';
@@ -90,6 +92,9 @@ class _AddEditTaskState extends State<AddEditTask> {
                 ElevatedButton(
                   onPressed: _title.isNotEmpty && _description.isNotEmpty
                       ? () {
+                          var task =
+                              Task(title: _title, description: _description);
+                          context.read<TasksBloc>().add(AddTask(task: task));
                           Navigator.pop(context);
                         }
                       : null,
