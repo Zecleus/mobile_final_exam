@@ -66,17 +66,23 @@ class _TasksDrawerState extends State<TasksDrawer> {
             ),
             const Divider(),
             const Expanded(child: SizedBox()),
-            ListTile(
-              leading: BlocBuilder<SwitchBloc, SwitchState>(
-                builder: (context, state) {
-                  return Switch(
-                    value: state.switchValue,
-                    onChanged: (newValue) =>
-                        _switchToDarkTheme(context, newValue),
-                  );
-                },
-              ),
-              title: const Text('Switch to Dark Theme'),
+            BlocBuilder<SwitchBloc, SwitchState>(
+              builder: (context, state) {
+                return ListTile(
+                  leading: BlocBuilder<SwitchBloc, SwitchState>(
+                    builder: (context, state) {
+                      return Switch(
+                        value: state.switchValue,
+                        onChanged: (newValue) =>
+                            _switchToDarkTheme(context, newValue),
+                      );
+                    },
+                  ),
+                  title: state.switchValue
+                      ? const Text('Switch to Light Mode')
+                      : const Text('Switch to Dark Mode'),
+                );
+              },
             ),
             const SizedBox(height: 10),
           ],
