@@ -43,9 +43,7 @@ class PopupMenu extends StatelessWidget {
       PopupMenuItem(
         onTap: cancelOrDeleteCallback,
         child: TextButton.icon(
-          onPressed: () {
-            // context.read<TasksBloc>().add(DeleteTask(task: task));
-          },
+          onPressed: null,
           icon: const Icon(Icons.delete),
           label: const Text('Delete'),
         ),
