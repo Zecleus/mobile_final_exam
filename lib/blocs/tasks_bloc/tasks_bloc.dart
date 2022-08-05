@@ -18,6 +18,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       ));
     });
 
+    //needs debugging kay di japon mawa
     on<UpdateTask>((event, emit) {
       final state = this.state;
       final task = event.task;
@@ -44,6 +45,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
           pendingTasks = List.from(pendingTasks)
             ..insert(0, task.copyWith(isDone: false));
         } else {
+          //logic makes sense but checkbox in favorite doens't uncheck
           var taskIndex = favoriteTasks.indexOf(task);
           completedTasks = List.from(completedTasks)..remove(task);
           pendingTasks = List.from(pendingTasks)
@@ -53,13 +55,12 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
             ..insert(taskIndex, task.copyWith(isDone: false));
         }
       }
-      emit(
-        TasksState(
-            pendingTasks: pendingTasks,
-            completedTasks: completedTasks,
-            favoriteTasks: state.favoriteTasks,
-            removedTasks: state.removedTasks),
-      );
+      emit(TasksState(
+        pendingTasks: pendingTasks,
+        completedTasks: completedTasks,
+        favoriteTasks: state.favoriteTasks,
+        removedTasks: state.removedTasks,
+      ));
     });
 
     on<DeleteTask>((event, emit) {
